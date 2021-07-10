@@ -18,8 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/',include("hello.urls")), # now we can access hello app with all its urls applied
+    path('hello/', include("hello.urls")
+         ),  # now we can access hello app with all its urls applied
     path('newyear/', include("newyear.urls")),
     path("tasks/", include("tasks.urls")),
-    
+    path("flights/", include("flights.urls"))
 ]
