@@ -57,7 +57,7 @@
 
 <!-- Search Ride -->
 
-<form action="{% url 'getride:getRide' 'hello' %}" method="post">
+<form action="{% url 'getride:getRide' %}" method="post">
   {% csrf_token %}
 <div class="container" style="margin-top: 10px;margin-bottom: 10px;">
   <div class="row row-cols-5">
@@ -73,8 +73,10 @@
         <option>{{city.city}}</option>
       {%endfor%}
     </select>
-  
-    <input name = "date" type="date" class="col">
+<!--   
+    <input name = "date" type="date" class="col"> -->
+    <!-- <input type="datetime" name="date" id="" class = "col"> -->
+    <input type="datetime-local" name="date" id="" class = "col">
     <input name="seat_available" type="number" placeholder="Seats" min="0" class="col">
     <input type="submit" value="search" class="col">
   </div>

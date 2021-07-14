@@ -13,12 +13,10 @@ class Cities(models.Model):
 
 
 class Ride(models.Model):
-    # user_name = models.ForeignKey(User,
-    #                               verbose_name="user_name",
-    #                               on_delete=models.CASCADE)
+    user_name = models.CharField(default="", max_length=50)
     origin = models.CharField(max_length=50)
     destination = models.CharField(max_length=50)
-    journey_date = models.DateField(auto_now=False, auto_now_add=False)
+    journey_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     seat_available = models.IntegerField()
 
 
