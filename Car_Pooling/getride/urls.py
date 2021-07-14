@@ -3,5 +3,6 @@ from . import views
 
 app_name = "getride"
 urlpatterns = [
-    path("<str:origintodestination>", views.getRide, name="getRide")
+    path("", views.getRide, name="getRide"),
+    path("chat/<str:queryparams>", views.chat, name="chat")
 ]

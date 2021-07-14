@@ -3,9 +3,54 @@
 
 
 {% block body %}
-{% for ride in rides %}
-    <h1>{{ride.origin}} to {{ride.destination}} with {{ride.seat_available}} seat available for {{ride.journey_date}}</h1>
-    {%empty%}
-    <h1>No rides</h1>
+{% load static %}
+
+
+<div style="width: 100%; text-align: center;">
+    <h3>Available Rides</h3>
+</div>
+<div class="row row-cols-1 row-cols-md-6 g-4">
+     {% for ride in rides %}
+        <div class="col">
+        <div class="card">
+            <img src="{% static 'images/th.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{ride.user_name}}</h5>
+            <p class="card-text">Leaving at: {{ride.journey_date}}</p>
+            <a href="{% url 'getride:chat' ride.user_name %}" class="btn btn-primary">Chat</a>
+            </div>
+        </div>
+        </div>
+</div>
+{% empty %}
+<div style="width: 100%;text-align: center;">
+    <h1>No rides Available based on your origin and destination</h1>
+</div>
 {% endfor %}
+
+
+
+<div style="width: 100%; text-align: center;">
+    <h3>Related Rides</h3>
+</div>
+<div class="row row-cols-1 row-cols-md-6 g-4">
+    {% for ride in relatedRides %}
+       <div class="col">
+       <div class="card">
+           <img src="{% static 'images/th.jpg' %}" class="card-img-top" alt="...">
+           <div class="card-body">
+            <h5 class="card-title">{{ride.user_name}}</h5>
+            <p class="card-text">Leaving at: {{ride.journey_date}}</p>
+           <a href="{% url 'getride:chat' ride %}" class="btn btn-primary">Chat</a>
+           </div>
+       </div>
+       </div>
+    {% endfor %}
+</div>
+
+
+
+
+<!-- <h1>No rides Available based on your origin and destination</h1> -->
+
 {% endblock body %}
