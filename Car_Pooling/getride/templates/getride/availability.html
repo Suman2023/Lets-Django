@@ -1,0 +1,11 @@
+{% extends "getride/layout.html" %}
+
+
+
+{% block body %}
+{% for ride in rides %}
+    <h1>{{ride.origin}} to {{ride.destination}} with {{ride.seat_available}} seat available for {{ride.journey_date}}</h1>
+    {%empty%}
+    <h1>No rides</h1>
+{% endfor %}
+{% endblock body %}

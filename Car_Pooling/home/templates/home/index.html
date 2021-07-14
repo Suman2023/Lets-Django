@@ -57,25 +57,25 @@
 
 <!-- Search Ride -->
 
-<form action="" method="post">
+<form action="{% url 'getride:getRide' 'hello' %}" method="post">
   {% csrf_token %}
 <div class="container" style="margin-top: 10px;margin-bottom: 10px;">
   <div class="row row-cols-5">
-    <select name="Cities" id="" class="col">
+    <select name="origin" id="" class="col">
       <option value="">From</option>
-      <option value="India">GHY</option>
-      <option value="India">KOL</option>
-      <option value="India">CHEN</option>
+      {% for city in cities %}
+        <option>{{city.city}}</option>
+      {%endfor%}
     </select>
-    <select name="Cities" id="" class="col">
+    <select name="destination" id="" class="col">
       <option value="">To</option>
-      <option value="India">GHY</option>
-      <option value="India">KOL</option>
-      <option value="India">CHEN</option>
+      {% for city in cities %}
+        <option>{{city.city}}</option>
+      {%endfor%}
     </select>
   
-    <input type="date" class="col">
-    <input type="number" placeholder="Seats" min="0" class="col">
+    <input name = "date" type="date" class="col">
+    <input name="seat_available" type="number" placeholder="Seats" min="0" class="col">
     <input type="submit" value="search" class="col">
   </div>
 </div>
