@@ -1,0 +1,14 @@
+{% extends "registration/layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+    
+
+
+
+    <h1>System Login</h1>
+    <form method="POST">
+         {% csrf_token %}
+        {{form|crispy}}
+        <button>Login</button>
+    </form>
+{% endblock body %}
