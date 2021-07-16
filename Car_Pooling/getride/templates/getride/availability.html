@@ -1,4 +1,4 @@
-{% extends "getride/layout.html" %}
+{% extends "default/layout.html" %}
 
 
 
@@ -6,34 +6,34 @@
 {% load static %}
 
 
-<div style="width: 100%; text-align: center;">
-    <h3>Available Rides</h3>
-</div>
-<div class="row row-cols-1 row-cols-md-6 g-4">
-     {% for ride in rides %}
-        <div class="col">
-        <div class="card">
-            <img src="{% static 'images/th.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">{{ride.user_name}}</h5>
-            <p class="card-text">Leaving at: {{ride.journey_date}}</p>
-            <a href="{% url 'getride:chat' ride.user_name %}" class="btn btn-primary">Chat</a>
+<h3 style="text-align: center;">Available Rides</h3>
+{% if rides %}
+    <div class="row row-cols-1 row-cols-md-6 mr-auto" style="padding-right: 0px;margin-right: 0px;">
+        {% for ride in rides %}
+            <div class="col">
+                <div class="card">
+                    <img src="{% static 'images/th.jpg' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ride.user_name}}</h5>
+                        <p class="card-text">Leaving at: {{ride.journey_date}}</p>
+                        <a href="#" class="btn btn-primary">Chat</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
-</div>
-{% empty %}
-<div style="width: 100%;text-align: center;">
-    <h1>No rides Available based on your origin and destination</h1>
-</div>
-{% endfor %}
+        {% endfor %}
+    </div>
+        
 
 
 
-<div style="width: 100%; text-align: center;">
-    <h3>Related Rides</h3>
-</div>
-<div class="row row-cols-1 row-cols-md-6 g-4">
+{% else %}
+    <h1 style="text-align: center;">No rides Available :(</h1>
+{% endif %}
+
+</br></br>
+
+<h1 style="text-align: center;">Related Rides</h1>
+<div class="row row-cols-1 row-cols-md-6 mr-auto" style="padding-right: 0px; margin-right: 0px;">
     {% for ride in relatedRides %}
        <div class="col">
        <div class="card">

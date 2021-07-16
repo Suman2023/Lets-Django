@@ -1,18 +1,20 @@
-{% extends "home/layout.html" %}
+{% extends "default/layout.html" %}
 
 {% block title %}
     Home
 {% endblock title %}
 
+{% block checkUser %}
+
+
+{% endblock checkUser %}
 
 <!-- <img src=" alt="My image"> -->
 {% block body %}
 
 {% load static %}
 
-
 <!-- Corousel -->
-
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -59,28 +61,31 @@
 
 <form action="{% url 'getride:getRide' %}" method="post">
   {% csrf_token %}
-<div class="container" style="margin-top: 10px;margin-bottom: 10px;">
-  <div class="row row-cols-5">
-    <select name="origin" id="" class="col">
-      <option value="">From</option>
-      {% for city in cities %}
-        <option>{{city.city}}</option>
-      {%endfor%}
-    </select>
-    <select name="destination" id="" class="col">
-      <option value="">To</option>
-      {% for city in cities %}
-        <option>{{city.city}}</option>
-      {%endfor%}
-    </select>
-<!--   
-    <input name = "date" type="date" class="col"> -->
-    <!-- <input type="datetime" name="date" id="" class = "col"> -->
-    <input type="datetime-local" name="date" id="" class = "col">
-    <input name="seat_available" type="number" placeholder="Seats" min="0" class="col">
-    <input type="submit" value="search" class="col">
+  <div class="container" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="row row-cols-5">
+      <select name="origin" id="" class="col">
+        <option value="">From</option>
+        {% for city in cities %}
+          <option>{{city.city}}</option>
+        {%endfor%}
+      </select>
+      <select name="destination" id="" class="col">
+        <option value="">To</option>
+        {% for city in cities %}
+          <option>{{city.city}}</option>
+        {%endfor%}
+      </select>
+    <!--   
+      <input name = "date" type="date" class="col"> -->
+      <!-- <input type="datetime" name="date" id="" class = "col"> -->
+      <input type="datetime-local" name="date" id="" class = "col">
+      <input name="seat_available" type="number" placeholder="Seats" min="0" class="col">
+      <input type="submit" value="search" class="col">
+    </div>
   </div>
-</div>
+  {% if validationerror %}
+    <p style="color: red; text-align: center; font-size: larger;">Invalid credentials</p>
+  {% endif %}
 </form>
 <!-- Search Ride -->
 
@@ -101,7 +106,7 @@
       </a>
 
       <!-- Twitter -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/mitrasuman07" role="button" target="_blank"
         ><i class="bi bi-twitter"></i
       ></a>
 
@@ -127,16 +132,6 @@
     <!-- Section: Social media -->
 
 
-    <!-- Section: Text -->
-    <!-- <section class="mb-4">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
-        repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
-        eum harum corrupti dicta, aliquam sequi voluptate quas.
-      </p>
-    </section>
-    Section: Text -->
-
     
   </div>
   <!-- Grid container -->
@@ -144,7 +139,7 @@
   <!-- Copyright -->
   <div class="text-center" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2021 Copyright:
-    <a class="text-white" href="#">CarPooling.com</a>
+    <a class="text-white" href="{% url 'home:index' %}">CarPooling.com</a>
   </div>
   <!-- Copyright -->
 </footer>

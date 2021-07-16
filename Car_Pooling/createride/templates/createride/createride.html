@@ -1,44 +1,39 @@
-{% extends "createride/layout.html" %}
+{% extends "default/layout.html" %}
 
 
 {% block body %}
 
 <form action="{% url 'createride:createride'%}" method="post" style="margin: 30px;">
     {% csrf_token %}
-<!-- <div style="position: fixed;
-top: 10%;
-left: 15%;">        -->
 
 
-<div class="container g-4">
-    <div class="row row-cols-2 g-4">
-        <input type="text" name="origin_location" id="" placeholder="origin location name">
-        <input type="text" name="destination_location" id="" placeholder="destination location name">
-        <select name="origin" id="">
-            <option value="">From</option>
+    <div class="container g-4">
+        <div class="row row-cols-2 g-4">
+            <input type="text" name="origin_location" id="" placeholder="origin location name">
+            <input type="text" name="destination_location" id="" placeholder="destination location name">
+            <select name="origin" id="">
+                {% for city in cities %}
+                <option value="{{city.city}}">{{city.city}}</option>
+                {% endfor %}
+            </select>
+        <select name="destination" id="">
             {% for city in cities %}
-            <option value="{{city.city}}">{{city.city}}</option>
+                <option value="{{city.city}}">{{city.city}}</option>
             {% endfor %}
         </select>
-    <select name="destination" id="">
-        <option value="">To</option>
-        {% for city in cities %}
-            <option value="{{city.city}}">{{city.city}}</option>
-        {% endfor %}
-    </select>
-        <input type="number" name="fare" id="" placeholder="Fare per person">
-        <input type="number" name="seat_available" id="" placeholder="Seat Available">
-        <input type="datetime-local" name="journey_date" id="">
-        <input type="number" name="contact" id="" placeholder="Phone">
-        <input type="email" name="" id="" placeholder="Email">
-        <input type="text" name="" id="" placeholder="Conditions">
+            <input type="number" name="fare" id="" placeholder="Fare per person">
+            <input type="number" name="seat_available" id="" placeholder="Seat Available">
+            <input type="datetime-local" name="journey_date" id="">
+            <input type="number" name="contact" id="" placeholder="Phone">
+            <input type="email" name="" id="" placeholder="Email">
+            <input type="text" name="" id="" placeholder="Conditions">
+        </div>
     </div>
-</div>
-<div class="container g-4">
-    <div class="row row-cols-1 g-4 mt-auto">
-        <input type="submit" value="submit">
+    <div class="container g-4">
+        <div class="row row-cols-1 g-4 mt-auto">
+            <input type="submit" value="submit">
+        </div>
     </div>
-</div>
 <!-- </div> -->
 
 </form>

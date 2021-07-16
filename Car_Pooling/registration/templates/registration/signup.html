@@ -1,17 +1,15 @@
-{% extends "registration/layout.html" %}
+{% extends "default/layout.html" %}
 
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <h1>Create New Account</h1>
-    <form method="POST">
-        {% csrf_token %} 
-        <fieldset class="form-group">
-          {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-          <button class="btn btn-outline-info" type="submit">Register</button>
-        </div>
-      </form>
+    <h1 style="text-align: center;">Create New Account</h1>
+    <div class="container">
+    <form method="post" class="well form-horizontal g-4">
+      {% csrf_token %}
+      {{form|crispy}}
+      <br><button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+  </div>
 {% endblock body %}
 
