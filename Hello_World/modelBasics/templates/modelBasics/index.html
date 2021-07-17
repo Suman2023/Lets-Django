@@ -1,0 +1,21 @@
+{% extends "modelBasics/layout.html" %}
+
+
+{% block body %}
+<div class="container" style="display: grid;place-items: center;background-color: antiquewhite; height: 100%;">
+<div style="align-content: center;">
+  <form action="{% url 'modelBasics:index' %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p}}
+      <div style="text-align: center; margin-top: 3%;">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>
+</div>
+{% for i in lst %}
+    <h1>{{i}}</h1>
+{% endfor %}
+
+{% endblock body %}
+
