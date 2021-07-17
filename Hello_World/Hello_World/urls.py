@@ -25,4 +25,5 @@ urlpatterns = [
     path("flights/", include("flights.urls")),
     path("users/", include("users.urls")),
     path('modelBasics/', include('modelBasics.urls')),
+    path("chat/", include("chat.urls")),
 ]
