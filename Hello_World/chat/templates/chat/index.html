@@ -1,22 +1,15 @@
 {% extends "chat/layout.html" %}
+{% load static %}
 
 
 {% block body %}
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+ 
+What chat room would you like to enter? <br>
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
+<input type="text" id="room-name-input" size = "100"><br>
+<input type="button" value="Enter" id="room-name-submit">
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
+
+<script src="{% static 'chat/js/index.js' %}"></script>
+
 {% endblock body %}
