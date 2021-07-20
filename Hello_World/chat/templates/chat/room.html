@@ -191,33 +191,23 @@
         "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
       );
 
-
+      chatSocket.onopen = function(e) {
+        fetchMessages();
+      }
 
       chatSocket.onmessage = function (e) {
-        console.log("yes")
         var data = JSON.parse(e.data);
-        var message = data['message'];
-        var author = message['author'];
 
-
-        var msgListTag = document.createElement('li');
-        var imgTag = document.createElement('img');
-        var pTag = document.createElement('p');
-
-        pTag.textContent = message.content;
-        imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
-
-        if(author === username)
+        if(data['command'] === 'messages')
         {
-          msgListTag.className = 'sent';
-        }else{
-          msgListTag.className = 'replies';
+          for(let i =0; i<data['messages'].length;i++)
+          {
+            createMessage(data['messages'][i]);
+          }
+        } else if(data['command'] === 'new_message')
+        {
+          createMessage(data['message']);
         }
-
-        msgListTag.appendChild(imgTag);
-        msgListTag.appendChild(pTag);
-        document.querySelector('#chat-log').appendChild(msgListTag);
-
 
       };
 
@@ -245,6 +235,42 @@
 
         messageInputDom.value = "";
       };
+
+
+      function fetchMessages()
+      {
+        chatSocket.send(JSON.stringify(
+          {
+            'command': 'fetch_messages',
+          }
+        ));
+      }
+
+
+      function createMessage(data)
+      {
+
+        var author = data['author'];
+
+
+        var msgListTag = document.createElement('li');
+        var imgTag = document.createElement('img');
+        var pTag = document.createElement('p');
+
+        pTag.textContent = data['content'];
+        imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
+
+        if(author === username)
+        {
+          msgListTag.className = 'sent';
+        }else{
+          msgListTag.className = 'replies';
+        }
+
+        msgListTag.appendChild(imgTag);
+        msgListTag.appendChild(pTag);
+        document.querySelector('#chat-log').appendChild(msgListTag);
+      }
     </script>
   </body>
 </html>

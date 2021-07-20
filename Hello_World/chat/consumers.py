@@ -24,9 +24,12 @@ class ChatConsumer(WebsocketConsumer):
 
     #getting messsages from database
     def fetch_messages(self, data):
-        print("fetch")
         messages = Message.last_10_messages()
-        content = {'messsages': self.messages_to_json(messages)}
+
+        content = {
+            'command': 'messages',
+            'messages': self.messages_to_json(messages)
+        }
         self.send_message(content)
 
     # save to db when someone sends a message
@@ -49,10 +52,8 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        print('connected')
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
-        print(self.scope['user'])
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name,
