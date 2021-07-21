@@ -35,7 +35,7 @@
     />
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="{% static 'chat/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'connect/css/style.css' %}" />
   </head>
 
   <body>
@@ -180,15 +180,20 @@
       </div>
     </div>
 
-    <script src="{% static 'chat/js/main.js' %}"></script>
-    <script src="{% static 'chat/js/reconnecting-websocket.js' %}"></script>
+    <script src="{% static 'connect/js/main.js' %}"></script>
+    <script src="{% static 'connect/js/reconnecting-websocket.js' %}"></script>
     <script>
       var roomName = {{ room_name_json }};
 
       var username = {{ username }};
+      var group_admin = {{group_admin}};
+      {% comment %} var group = {{group}}; {% endcomment %}
 
+
+
+      console.log("hello");
       var chatSocket = new ReconnectingWebSocket(
-        "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
+        "ws://" + window.location.host + "/ws/connect/" + roomName + "/"
       );
 
       chatSocket.onopen = function(e) {
@@ -230,6 +235,8 @@
             'command': "new_message",
             'message': message,
             'from': username,
+            'room_name':roomName,
+            'group_admin':group_admin,
           })
         );
 
@@ -242,6 +249,8 @@
         chatSocket.send(JSON.stringify(
           {
             'command': 'fetch_messages',
+            'room_name': roomName,
+            'group_admin':group_admin,
           }
         ));
       }

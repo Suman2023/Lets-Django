@@ -10,5 +10,5 @@ document.querySelector("#room-name-input").onkeyup = (e) => {
 
 document.querySelector("#room-name-submit").onclick = (e) => {
   var roomName = document.querySelector("#room-name-input").value;
-  window.location.pathname = "/chat/" + roomName + "/";
+  window.location.pathname = "/connect/" + roomName + "/";
 };

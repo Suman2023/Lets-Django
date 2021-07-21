@@ -2,7 +2,7 @@ import json
 from django.contrib.auth import get_user_model
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
-from .models import Message
+from .models import Message, Room
 
 User = get_user_model()
 
@@ -20,23 +20,46 @@ class ChatConsumer(WebsocketConsumer):
             'author': message.author.username,
             'content': message.content,
             'timeStamp': str(message.timeStamp),
+            # 'group_admin': message.group__group_admin.username,
+            # 'group_name': message.group__group_name
         }
 
     #getting messsages from database
     def fetch_messages(self, data):
-        messages = Message.last_10_messages()
+        print(data['room_name'] + "    " + data['group_admin'])
+        messages = Message.last_10_messages(
+            data['room_name'],
+            data['group_admin'],
+        )
 
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
         }
+        print("fetched content: ", content)
         self.send_message(content)
 
     # save to db when someone sends a message
     def new_message(self, data):
         author = data['from']
+        group_admin_username = data['group_admin']
         author_user = User.objects.filter(username=author)[0]
+        group_name = data['room_name'],
+        group_admin = User.objects.filter(username=group_admin_username)[0]
+        try:
+            group = Room.objects.create(
+                group_admin=group_admin,
+                group_name=group_name,
+            )
+
+            print("in try group: ", group)
+
+        except:
+            group = Room.objects.filter(group_name=group_name, ).all()[0]
+            print("in new message except: ", group)
+            pass
         message = Message.objects.create(
+            group=group,
             author=author_user,
             content=data['message'],
         )
@@ -44,6 +67,7 @@ class ChatConsumer(WebsocketConsumer):
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
+        print("sent content: ", content)
         return self.send_chat_message(content)
 
     commands = {

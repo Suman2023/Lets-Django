@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'channels',
-    'chat',
+    'connect',
     'modelBasics',
     'users',
     'flights',
