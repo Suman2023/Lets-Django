@@ -26,7 +26,6 @@ class ChatConsumer(WebsocketConsumer):
 
     #getting messsages from database
     def fetch_messages(self, data):
-        print(data['room_name'] + "    " + data['group_admin'])
         messages = Message.last_10_messages(
             data['room_name'],
             data['group_admin'],
@@ -36,7 +35,6 @@ class ChatConsumer(WebsocketConsumer):
             'command': 'messages',
             'messages': self.messages_to_json(messages)
         }
-        print("fetched content: ", content)
         self.send_message(content)
 
     # save to db when someone sends a message
@@ -44,20 +42,10 @@ class ChatConsumer(WebsocketConsumer):
         author = data['from']
         group_admin_username = data['group_admin']
         author_user = User.objects.filter(username=author)[0]
-        group_name = data['room_name'],
+        group_name = data['room_name']
         group_admin = User.objects.filter(username=group_admin_username)[0]
-        try:
-            group = Room.objects.create(
-                group_admin=group_admin,
-                group_name=group_name,
-            )
 
-            print("in try group: ", group)
-
-        except:
-            group = Room.objects.filter(group_name=group_name, ).all()[0]
-            print("in new message except: ", group)
-            pass
+        group = Room.objects.filter(group_name=group_name)[0]
         message = Message.objects.create(
             group=group,
             author=author_user,
@@ -67,7 +55,6 @@ class ChatConsumer(WebsocketConsumer):
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
-        print("sent content: ", content)
         return self.send_chat_message(content)
 
     commands = {
